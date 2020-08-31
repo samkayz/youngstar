@@ -105,3 +105,8 @@ def add_story(request):
     
     show = Object.all_story()
     return render(request, 'add_story.html', {'show': show})
+
+#View fuction that handle Adding story Story
+def delete_story(request, id):
+    Object.delete_story(request, id)
+    return redirect('/add_story')

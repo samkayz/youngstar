@@ -39,7 +39,7 @@ class Main:
         return messages.success(request, "Story Added")
 
     #Function to Delete Story
-    def delete(self, request, id):
+    def delete_story(self, request, id):
         Story.objects.filter(id=id).delete()
         return messages.success(request, "Story Deleted")
     
