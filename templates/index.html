@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Multiple Choice Questions</title>
+
+    <!-- BASE CSS -->
+    <link href="{% static 'css/style.css'%}" rel="stylesheet">
+
+</head>
+
+<body>
+
+	<header>
+		
+		<!-- /container -->
+	</header>
+	<!-- /Header -->
+
+	<div class="container">
+        <div id="form_container">
+            <div class="row no-gutters">
+                <div class="col-lg-12">
+                    <div id="wizard_container">
+                        <div id="top-wizard">
+                            <div id="progressbar"></div>
+                            <span id="location"></span>
+                        </div>
+                        <!-- /top-wizard -->
+                        <form name='submit' method="post" action="/process">
+                            {% csrf_token %}
+                            <input id="website" name="website" type="hidden" value="">
+                            <div id='timediv'>Time:<span id='time'>05:00</span></div>
+                            <!-- Leave for security protection, read docs for details -->
+                            <div id="middle-wizard">
+                                {% for data in show_story %}
+                                <div class="step">
+                                    <h3 class="main_question"><i class="arrow_right"></i>About the Contest</h3>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <p>{{data.story}}</p>
+                                        </div>
+                                    </div>
+                                    <!-- /row -->
+                                </div>
+                                {% endfor %}
+                                {% for data in show %}
+                                <div class="step">
+                                    <h3 class="main_question"><i class="arrow_right"></i>{{data.questn}}</h3>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="container">{{data.option1}}
+                                                    <input type="radio" value="{{data.id}}option1" name="radio{{ forloop.counter }}" >
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="container">{{data.option2}}
+                                                    <input type="radio" value="{{data.id}}option2" name="radio{{ forloop.counter }}">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="container">{{data.option3}}
+                                                    <input type="radio" value="{{data.id}}option3" name="radio{{ forloop.counter }}" >
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="container">{{data.option4}}
+                                                    <input type="radio" value="{{data.id}}option4" name="radio{{ forloop.counter }}" >
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <!-- /row -->
+                                </div>
+                                {% endfor %}
+                                <!-- /step-->
+                                <div class="submit step" id="end">
+                                    <div class="summary">
+                                        <div class="wrapper">
+                                            <h3>Thank your for your time<br></h3>
+                                            <p>Once You click on submit, your result will be display</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="form-group terms">
+                                                <label class="container">Are you sure you want to Submit?
+                                                    <input type="checkbox" name="terms" value="Yes" class="required">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /step last-->
+
+                            </div>
+                            <!-- /middle-wizard -->
+                            <div id="bottom-wizard">
+                                <button type="button" name="backward" class="backward">Prev</button>
+                                <button type="button" name="forward" class="forward">Next</button>
+                                <button type="submit" name="process" class="submit">Submit</button>
+                            </div>
+                            <!-- /bottom-wizard -->
+                        </form>
+                    </div>
+                    <!-- /Wizard container -->
+                </div>
+            </div><!-- /Row -->
+        </div><!-- /Form_container -->
+    </div>
+    <!-- /container -->
+    <script>
+        function startTimer(duration, display) {
+           var timer = duration;
+           var minutes, seconds;
+           var ok=false;
+           var form=document.forms.submit;
+           
+           var t=setInterval(function() {
+              minutes = parseInt(timer / 60, 10);
+              seconds = parseInt(timer % 60, 10);
+              minutes = minutes < 10 ? "0" + minutes : minutes;
+              seconds = seconds < 10 ? "0" + seconds : seconds;
+
+              display.textContent = minutes + ":" + seconds;
+              
+              
+
+              if (--timer <= 0) {
+                 timer = duration;
+
+                 if( !isNaN( t ) )clearInterval( t );
+                 
+			// submit the form...
+			form.submit();
+		}
+	}, 1000);
+       }
+
+       window.onload = function() {
+           var examTime = 300 * 1.1;
+           var display = document.querySelector('#time');
+           startTimer(examTime, display);
+       };
+   </script>	
+   <!-- SCRIPTS -->
+   <script src="{% static 'js/jquery-3.2.1.min.js'%}"></script>
+   <script src="{% static 'js/common_scripts.min.js'%}"></script>
+   <script src="{% static 'js/common_functions.js'%}"></script>
+   <script src="{% static 'js/func_1.js'%}"></script>
+
+</body>
+</html>

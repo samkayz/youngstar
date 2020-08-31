@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+
+<head>
+    <title>Multiple Choice Questions</title>
+
+    <!-- BASE CSS -->
+    <link href="{% static 'css/style.css'%}" rel="stylesheet">
+
+</head>
+<body>
+
+    <h3>Update Question</h3>
+
+    <div>
+      <form action="/update" method="POST">
+        {% csrf_token %}
+        <label for="question">Question</label><br>
+        <input type="hidden" id="id" name="id" value="{{all_info.id}}">
+        <input type="text" id="question" name="question" value="{{all_info.questn}}" placeholder="Enter Question"><br>
+
+        <label for="option1">Option 1</label><br>
+        <input type="text" id="option1" value="{{all_info.option1}}" name="option1" placeholder="Option 1"><br>
+
+        <label for="option2">Option 2</label><br>
+        <input type="text" id="option2" value="{{all_info.option2}}" name="option2" placeholder="Option 2"><br>
+
+        <label for="option3">Option 3</label><br>
+        <input type="text" id="option3" value="{{all_info.option3}}" name="option3" placeholder="Option 3"><br>
+
+        <label for="option4">Option 4</label><br>
+        <input type="text" id="option4" value="{{all_info.option4}}" name="option4" placeholder="Option 4"><br>
+
+        <label for="answer">Answer</label><br>
+        <select id="answer" name="answer">
+          <option value="option1">Option1</option>
+          <option value="option2">Option2</option>
+          <option value="option3">Option3</option>
+          <option value="option4">Option4</option>
+      </select><br>
+      
+      <input type="submit" value="Update Question">
+  </form><br><br><br><br><br>
+  {% for message in messages %}
+  {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Warning - </strong> {{ message }}
+</div>
+{% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+<div class="alert alert-success alert-dismissible bg-success text-white border-0 fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Success - </strong> {{ message }}
+</div>
+{% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+<div class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Error - </strong> {{ message }}
+</div>
+{% endif %}
+{% endfor %}
+
+<h3>All Questions</h3>
+<table id="allquestion">
+  <tr>
+    <th>S/N</th>
+    <th>Question</th>
+    <th>Option 1</th>
+    <th>Option 2</th>
+    <th>Option 3</th>
+    <th>Option 4</th>
+    <th>Answer</th>
+    <th>Action</th>
+</tr>
+{% for data in show %}
+<tr>
+    <td>{{ forloop.counter }}</td>
+    <td>{{data.questn}}</td>
+    <td>{{data.option1}}</td>
+    <td>{{data.option2}}</td>
+    <td>{{data.option3}}</td>
+    <td>{{data.option4}}</td>
+    <td>{{data.answer}}</td>
+    <td>
+        <a href="/edit/{{data.id}}" ><button >Edit</button></a>
+        <a href="/delete/{{data.id}}" ><button>Delete</button></a>
+    </td>
+</tr>
+{% endfor %}
+</table>
+</div>
+
+<div style="float: right;">
+
+</div>
+
+</body>
+</html>

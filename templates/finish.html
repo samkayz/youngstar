@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Multiple Choice Questions</title>
+
+    <!-- BASE CSS -->
+    <link href="{% static 'css/style.css'%}" rel="stylesheet">
+
+</head>
+<body>
+
+
+<!-- Document Wrapper   
+============================================= -->
+<div id="main-wrapper"> 
+  
+  <!-- Content
+  ============================================= -->
+  <div id="content" class="py-4">
+    <div class="container">
+      <h2 class="font-weight-400 text-center mt-3 mb-4">Finish</h2>
+      <div class="row">
+        <div class="col-md-8 col-lg-6 col-xl-5 mx-auto"> 
+          
+          <!-- Request Money Success
+          ============================================= -->
+          <div class="bg-light shadow-sm rounded p-3 p-sm-4 mb-4">
+            <div class="text-center my-5">
+              <p class="text-center text-success text-20 line-height-07"><i class="fas fa-check-circle"></i></p>
+              <p class="text-center text-4"><h1>{{percentage}}%</h1></p>
+            </div>
+            {% if percentage >= 75.0 %}
+                <p class="text-center text-3 mb-4">Wow!!! You passed </span><br><br>
+            {% else %}
+                <p class="text-center text-3 mb-4">OH!!! Your Score is bellow Average </span><br><br>
+            {% endif %}
+            <button class="btn btn-primary btn-block" onclick="window.location.href='/'">Retark the Test</button>
+          </div>
+          <!-- Request Money Success end --> 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Document Wrapper end --> 
+
+<!-- Back to Top
+============================================= --> 
+
+</html>
